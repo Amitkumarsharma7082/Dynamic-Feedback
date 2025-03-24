@@ -1,7 +1,7 @@
 import { Question, Response } from "@/types";
 
 // Normally these would be stored in a .env file, but for demo purposes:
-const API_URL = "https://api.example.com";
+const API_URL = "https://dynamic-feedback-1.onrender.com";
 // In a production app, we would use a real backend
 // This is a mock implementation for demonstration
 
@@ -59,8 +59,9 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Questions API
 export const fetchQuestions = async (): Promise<Question[]> => {
-  await delay(800);
-  return [...questions];
+  const response = await fetch(`${API_URL}/questions`);
+  if (!response.ok) throw new Error("Failed to fetch questions");
+  return await response.json();
 };
 
 export const fetchPublishedQuestions = async (): Promise<Question[]> => {
@@ -78,15 +79,14 @@ export const fetchQuestion = async (
 export const createQuestion = async (
   question: Omit<Question, "id" | "createdAt" | "updatedAt">
 ): Promise<Question> => {
-  await delay(500);
-  const newQuestion: Question = {
-    ...question,
-    id: Date.now().toString(),
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
-  questions = [...questions, newQuestion];
-  return newQuestion;
+  const response = await fetch(`${API_URL}/questions`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(question),
+  });
+
+  if (!response.ok) throw new Error("Failed to create question");
+  return await response.json();
 };
 
 export const updateQuestion = async (
