@@ -24,26 +24,19 @@ A beautiful, customizable feedback widget that can be embedded into any website,
 
 ### Installation
 
-1. Clone the repository
-
-   ```
-   git clone <repository-url>
-   cd dynamic-feedback-widget
-   ```
-
-2. Install dependencies
+1. Install dependencies
 
    ```
    npm install
    ```
 
-3. Start the development server
+2. Start the development server
 
    ```
    npm run dev
    ```
 
-4. Open your browser and navigate to `http://localhost:8080`
+3. Open your browser and navigate to `http://localhost:8080`
 
 ## Using the Widget
 
